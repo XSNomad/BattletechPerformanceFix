@@ -19,8 +19,10 @@ namespace BattletechPerformanceFix
 
         public static Hook Prefix(MethodBase target, MethodInfo mi, int priority = Priority.Normal) {
             var h = new Hook(target, mi);
-            var m = new HarmonyMethod(mi);
-            m.prioritiy = priority;
+            var m = new HarmonyMethod(mi)
+            {
+                prioritiy = priority
+            };
             Main.harmony.Patch(target, m, null);
             return h;
         }

@@ -23,8 +23,10 @@ namespace BattletechPerformanceFix
                  {
                      var meth = AccessTools.Method(ty.BaseType, "UpdateEncounterObjectRef");
 
-                     var tpatch = new HarmonyMethod(typeof(ContractLagFix), nameof(Transpile));
-                     tpatch.prioritiy = Priority.First;
+                     var tpatch = new HarmonyMethod(typeof(ContractLagFix), nameof(Transpile))
+                     {
+                         prioritiy = Priority.First
+                     };
 
                      Main.harmony.Patch(meth
                                           , new HarmonyMethod(typeof(ContractLagFix), nameof(Pre))
@@ -41,7 +43,7 @@ namespace BattletechPerformanceFix
 
         }
 
-        static Stopwatch sw = new Stopwatch();
+        static Stopwatch sw = new();
 
         public static void EncounterLayerData_Constructor(EncounterLayerData __instance)
         {
@@ -49,7 +51,7 @@ namespace BattletechPerformanceFix
             eld_cache.Add(__instance);
         }
 
-        static List<EncounterLayerData> eld_cache = new List<EncounterLayerData>();
+        static List<EncounterLayerData> eld_cache = new();
 
         public static EncounterLayerData CachedEncounterLayerData()
         {
@@ -101,7 +103,7 @@ namespace BattletechPerformanceFix
         public static void Post()
         {
             sw.Stop();
-            //LogDebug("UpdateEncounterObjectRef {0}: {1} ms total", ct++, sw.Elapsed.TotalMilliseconds);
+            //LogDebug($"UpdateEncounterObjectRef: {1} ms total", sw.Elapsed.TotalMilliseconds);
         }
     }
 }

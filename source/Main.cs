@@ -19,7 +19,7 @@ namespace BattletechPerformanceFix
 {
     public class Settings {
         public string logLevel = "debug";
-        public Dictionary<string,bool> features = new Dictionary<string,bool>();
+        public Dictionary<string,bool> features = new();
 
         public bool WantContractsLagFixVerify = false;
     }
@@ -82,7 +82,7 @@ namespace BattletechPerformanceFix
                 harmony = HarmonyInstance.Create(ModFullName);
 
                 var allFeatures = new Dictionary<Type, bool> {
-                    //{ typeof(LazyRoomInitialization), false },
+                    { typeof(LazyRoomInitialization), false },
                     { typeof(HarmonyPatches), true },
                     { typeof(LocalizationPatches), true },
                     { typeof(MechlabFix), true },

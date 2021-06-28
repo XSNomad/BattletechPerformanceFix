@@ -2,6 +2,7 @@ using Harmony;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using static BattletechPerformanceFix.Extensions;
 
@@ -63,18 +64,20 @@ namespace BattletechPerformanceFix {
 
         public static string StripComments(string json)
         {
-            
+
             // Try to parse the json, if it doesn't work, use HBS comment stripping code.
-            try
-            {
+
+                try
+                {
                 fastJSON.JSON.Parse(json);
-                return json;
+                    return json;
+                }
+                catch
+                {
+                    LogError($"Unable to use fastJSON on {json}");
+                    return HBSStripCommentsMirror(json);
+                }
             }
-            catch
-            {
-                return HBSStripCommentsMirror(json);
-            }
-        }
 
         public static bool Prefix(string json, ref string __result) {
             var res =  TrapAndTerminate("DontStripComments.Prefix", () =>

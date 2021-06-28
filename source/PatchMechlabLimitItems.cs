@@ -249,11 +249,11 @@ namespace BattletechPerformanceFix
                                           : instance.sim.GetItemCount(componentRef.Def.Description, componentRef.Def.GetType(), instance.sim.GetItemCountDamageType(componentRef)));
 
                             if (componentRef.ComponentDefType == ComponentType.Weapon) {
-                                ListElementController_InventoryWeapon_NotListView controller = new ListElementController_InventoryWeapon_NotListView();
+                                ListElementController_InventoryWeapon_NotListView controller = new();
                                 controller.InitAndFillInSpecificWidget(componentRef, null, instance.dataManager, null, count, false);
                                 return controller;
                             } else {
-                                ListElementController_InventoryGear_NotListView controller = new ListElementController_InventoryGear_NotListView();
+                                ListElementController_InventoryGear_NotListView controller = new();
                                 controller.InitAndFillInSpecificWidget(componentRef, null, instance.dataManager, null, count, false);
                                 return controller;
                             }
@@ -316,17 +316,18 @@ namespace BattletechPerformanceFix
         }
 
         public MechLabDraggableItemType ToDraggableType(MechComponentDef def) {
-            switch(def.ComponentType) {
-            case ComponentType.NotSet: return MechLabDraggableItemType.NOT_SET;
-            case ComponentType.Weapon: return MechLabDraggableItemType.InventoryWeapon;
-            case ComponentType.AmmunitionBox: return MechLabDraggableItemType.InventoryItem;
-            case ComponentType.HeatSink: return MechLabDraggableItemType.InventoryGear;
-            case ComponentType.JumpJet: return MechLabDraggableItemType.InventoryGear;
-            case ComponentType.Upgrade: return MechLabDraggableItemType.InventoryGear;
-            case ComponentType.Special: return MechLabDraggableItemType.InventoryGear;
-            case ComponentType.MechPart: return MechLabDraggableItemType.InventoryGear;
-            }
-            return MechLabDraggableItemType.NOT_SET;
+            return def.ComponentType switch
+            {
+                ComponentType.NotSet => MechLabDraggableItemType.NOT_SET,
+                ComponentType.Weapon => MechLabDraggableItemType.InventoryWeapon,
+                ComponentType.AmmunitionBox => MechLabDraggableItemType.InventoryItem,
+                ComponentType.HeatSink => MechLabDraggableItemType.InventoryGear,
+                ComponentType.JumpJet => MechLabDraggableItemType.InventoryGear,
+                ComponentType.Upgrade => MechLabDraggableItemType.InventoryGear,
+                ComponentType.Special => MechLabDraggableItemType.InventoryGear,
+                ComponentType.MechPart => MechLabDraggableItemType.InventoryGear,
+                _ => MechLabDraggableItemType.NOT_SET,
+            };
         }
 
         /* Fast sort, which works off data, rather than visual elements. 
@@ -400,7 +401,8 @@ namespace BattletechPerformanceFix
                     tmpctl.ammoBoxDef = null;
                     tmpctl.componentDef = null;
                     var def = item.componentDef;
-                    switch (def.ComponentType) {
+                switch (def.ComponentType)
+                {
                     case ComponentType.Weapon:
                         tmpctl.weaponDef = def as WeaponDef;
                         break;
@@ -413,7 +415,7 @@ namespace BattletechPerformanceFix
                     case ComponentType.Upgrade:
                         tmpctl.componentDef = def;
                         break;
-                    }
+                }
                 Func<string> Summary = () =>
                 {
                     var o = "";

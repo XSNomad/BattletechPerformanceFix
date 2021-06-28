@@ -58,7 +58,7 @@ namespace BattletechPerformanceFix
             allowInit = false;
         }
 
-        public static Dictionary<SGRoomControllerBase, bool> DB = new Dictionary<SGRoomControllerBase, bool>();
+        public static Dictionary<SGRoomControllerBase, bool> DB = new();
         public static bool allowInit = false;
         public static bool InitWidgets(SGRoomControllerBase __instance)
         {
